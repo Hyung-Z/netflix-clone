@@ -1,21 +1,54 @@
 html {
-    padding: 16px;
     background-color: black;
     color: whitesmoke;
 }
 
+body{
+    position: relative;
+}
+
 header {
     height : 70px;
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    z-index: 100;
+    background-color: black;    
+    background-color: transparent;
 }
 
 header nav {
     display: flex;
     flex-direction: row;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
+#profile {
+    width : 50px;
+}
+
+#arrow {
+    width: 12px !important;
+    height: 12px !important;
+    margin-bottom: 10px;
+    transition: transform 0.4s ease-in-out;
+}
+
+
+#face:hover ~ #arrow {
+    transform: rotate(180deg);
+}
+
+#face:hover ~ #profiles, #alram:hover ~ #notice{
+    display: block;
+}
+
+#arrow:hover {
+    transform: rotate(180deg);
+}
 
 header nav ul {
     display: flex;
@@ -26,15 +59,76 @@ header nav ul {
 
 header nav ul li {
     margin : auto 5px;
+    position: relative;
 }
 
-header nav ul li:hover {
+header #right ul img:hover {
     scale : 1.1;
 }
+
 
 nav a{
     text-decoration: none;
     color:inherit
+}
+
+#notice, #profiles {
+    position: absolute;
+    width : 400px;
+    right: 10px;
+    top: 50px;
+    display: none;
+}
+
+#notice ul, #profiles ul{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.763);
+    width: 100%;
+    box-shadow: 0 -3px rgba(255, 255, 255, 0.5);
+    border: 0.5px solid rgba(255, 255, 255, 0.3) ;
+}
+
+#profile li {
+    display: flex;
+    flex-direction: row;
+    margin: 8px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    background-color: whitesmoke;
+    margin-right: 16px;
+}
+
+#notice li p {
+    text-align: center;
+}
+
+#listop {
+    width: 15px ;
+    height: 15px ;
+    position: absolute;
+    right: 0px;
+    rotate: 180deg;
+    top: -13px;
+    opacity: 0.5;
+}
+
+#listop {
+    width: 15px ;
+    height: 15px ;
+    position: absolute;
+    right: 0px;
+    rotate: 180deg;
+    top: -13px;
+    opacity: 0.5;
+}
+
+
+main {
+    margin-top: -80px;
 }
 
 #mainlogo {
@@ -104,6 +198,7 @@ nav a{
 .category {
     display: flex;
     flex-direction: column;
+    padding:16px;
 }
 
 .scrollbox{
@@ -182,4 +277,9 @@ button:hover {
 #detail {
     background-color: rgba(109, 109, 110, 0.7);
     color: white;
+}
+
+#right .icon {
+    width: 30px;
+    height: 30px;
 }
