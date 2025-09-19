@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Netflix Clone</title>
     <link rel="stylesheet" href="main.css" />
+    <script src="main.js" defer></script>
   </head>
   <body>
     <header>
@@ -55,8 +56,14 @@
             <div id="profiles">
               <img id="listop" src="화살표.png" alt="" />
               <ul>
-                <li><div class="profile-img"></div><div class="user-name">name</div></li>
-                <li><div class="profile-img"></div><div class="user-name">name</div></li>
+                <li>
+                  <div class="profile-img"></div>
+                  <div class="user-name">name</div>
+                </li>
+                <li>
+                  <div class="profile-img"></div>
+                  <div class="user-name">name</div>
+                </li>
               </ul>
             </div>
           </li>
@@ -90,23 +97,32 @@
       <section id="mid">
         <section class="category">
           <h3>밥친구</h3>
-          <ul class="scrollbox">
-            <li>
-              <img
-                src="https://i.namu.wiki/i/5WrAaHuPNhm4oFzimMU8XwW2efhDQzlsyvG7Lyp0bWqNfv0siofLzouDLpJaCbqCBs7jU1ATH8_hY22XodS8-92oL9SuOI82Y7_TmaPdT1DD74X0eL3aLyyDU6625YyJMSaa84WXx8ay-bIWtf447A.webp"
-                alt="보이스"
-              />
-            </li>
-            <li>box1</li>
-            <li>box1</li>
-            <li>box1</li>
-            <li>box1</li>
-            <li>box1</li>
-          </ul>
+          <nav class="slider prev">〈</nav>
+            <ul class="scrollbox">
+              <li>
+                <img
+                  src="https://i.namu.wiki/i/5WrAaHuPNhm4oFzimMU8XwW2efhDQzlsyvG7Lyp0bWqNfv0siofLzouDLpJaCbqCBs7jU1ATH8_hY22XodS8-92oL9SuOI82Y7_TmaPdT1DD74X0eL3aLyyDU6625YyJMSaa84WXx8ay-bIWtf447A.webp"
+                  alt="보이스"
+                />
+              </li>
+              <li>box1</li>
+              <li>box2</li>
+              <li>box3</li>
+              <li>box4</li>
+              <li>box5</li>
+              <li>box6</li>
+              <li>box7</li>
+              <li>box8</li>
+              <li>box9</li>
+              <li>box10</li>
+
+            </ul>
+          <nav class="slider next">〉</nav>
         </section>
 
         <section class="category">
           <h3>000님이 시청중인 컨텐츠</h3>
+          <nav class="slider prev">〈</nav>
           <ul class="scrollbox">
             <li>
               <img
@@ -120,10 +136,12 @@
             <li>box1</li>
             <li>box1</li>
           </ul>
+          <nav class="slider next">〉</nav>
         </section>
 
         <section class="category">
           <h3>연애세포를 깨우는 작품들</h3>
+          <nav class="slider prev">〈</nav>
           <ul class="scrollbox">
             <li>box1</li>
             <li>box1</li>
@@ -132,12 +150,14 @@
             <li>box1</li>
             <li>box1</li>
           </ul>
+          <nav class="slider next">〉</nav>
         </section>
       </section>
 
       <section>
         <section class="category">
           <h3>오늘의 대한민국 탑 컨텐츠</h3>
+          <nav class="slider prev">〈</nav>
           <ul class="scrollbox" id="rank">
             <li>
               <div class="left-ranking"><span>1</span></div>
@@ -174,6 +194,7 @@
               <div class="right-poster">f</div>
             </li>
           </ul>
+          <nav class="slider next">〉</nav>
         </section>
       </section>
     </main>

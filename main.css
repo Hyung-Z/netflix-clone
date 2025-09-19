@@ -199,27 +199,65 @@ main {
     display: flex;
     flex-direction: column;
     padding:16px;
+    position: relative;
+    width: 100%;
+    scroll-behavior: smooth;
+
+}
+
+.slider {
+    position: absolute;
+    font-size: 50px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 16px auto;
+    z-index: 10;
+    width: 60px;
+    color: transparent;
+    background-color: transparent;
+    transform: translateY(44%);
+}
+
+.slider:hover {
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.349);
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
 }
 
 .scrollbox{
     display: flex;
+    position: relative;
     flex-direction: row; 
     overflow: scroll;
+    overflow-x: auto;
     list-style: none;
     height : 250px;
     padding : 0;
     -ms-overflow-style: none;  /* IE, Edge */
     scrollbar-width: none;     /* Firefox */
-
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;      /* 가로 방향 스냅 */
 }
+
+
 
 .scrollbox li {
     height: 200px;
     aspect-ratio: 16/9;
-
     margin : 8px 16px 0 0;
     padding: 0;
-    background-color: black;
+    background-color: rgb(103, 103, 103);
+    scroll-snap-align: start; 
+    scroll-behavior: smooth;
 }
 
 .scrollbox li img {
