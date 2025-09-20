@@ -5,6 +5,7 @@ html {
 
 body{
     position: relative;
+    margin: 0;
 }
 
 header {
@@ -16,6 +17,11 @@ header {
     justify-content: space-between;
     z-index: 100;
     background-color: black;    
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 0;
+}
+
+header.is-scrolling {
     background-color: transparent;
 }
 
@@ -233,31 +239,33 @@ main {
     right: 0;
 }
 
+
+.scrollbox-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
 .scrollbox{
     display: flex;
-    position: relative;
     flex-direction: row; 
-    overflow: scroll;
-    overflow-x: auto;
+    /* overflow: scroll; */
     list-style: none;
     height : 250px;
     padding : 0;
     -ms-overflow-style: none;  /* IE, Edge */
     scrollbar-width: none;     /* Firefox */
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;      /* 가로 방향 스냅 */
+    transition: transform 0.5s ease-in-out;
 }
 
 
 
 .scrollbox li {
+    flex-shrink: 0;
     height: 200px;
     aspect-ratio: 16/9;
     margin : 8px 16px 0 0;
     padding: 0;
     background-color: rgb(103, 103, 103);
-    scroll-snap-align: start; 
-    scroll-behavior: smooth;
 }
 
 .scrollbox li img {
@@ -284,6 +292,10 @@ main {
     margin-left: 45px;
     color: transparent;                /* 안쪽 비우기 */
     -webkit-text-stroke: 2px #8a8a8a;     /* 외곽선만 표시 */
+}
+
+.left-ranking {
+    background-color: black !important;
 }
 
 #rank li .right-poster {
