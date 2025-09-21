@@ -206,9 +206,7 @@ main {
     flex-direction: column;
     padding:16px;
     position: relative;
-    width: 100%;
     scroll-behavior: smooth;
-
 }
 
 .slider {
@@ -224,6 +222,23 @@ main {
     color: transparent;
     background-color: transparent;
     transform: translateY(44%);
+}
+
+
+.indicator {
+    position: absolute;
+    right: 15px;
+    top: 40px;  
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    font-size: 60px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.537);
+}
+
+.now-here {
+    color:  rgba(255, 255, 255, 0.888);
 }
 
 .slider:hover {
