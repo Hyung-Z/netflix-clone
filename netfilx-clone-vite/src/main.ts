@@ -1,10 +1,10 @@
-import { initScrollHeader } from "./header/scrollHeader.js";
-import Carousel from "./carousel/Carousel.js";
+import { initScrollHeader } from "./header/scrollHeader";
+import Carousel from "./carousel/Carousel";
 
 initScrollHeader("header", 150);
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".category").forEach((cat) => {
+  document.querySelectorAll<HTMLElement>(".category").forEach((cat) => {
     new Carousel(cat, { loop: true });
   });
 });
@@ -50,7 +50,7 @@ fetch("https://raw.githubusercontent.com/Hyung-Z/tvshowgame/refs/heads/main/data
             const name = cat_data[idx][2]
             const date = cat_data[idx][4]
             if (li.innerHTML.includes('box')) {
-                li.innerHTML = `<p>${track}</p><br><p>${name}</p><br><p>${date}</p>`
+                li.innerHTML = `<br><p>${track}</p><br><p>${name}</p><br><p>${date}</p>`
             }
         })
     })
