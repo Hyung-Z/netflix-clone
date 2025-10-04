@@ -29,9 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         new Carousel(cat, { loop: true });
       });
-    });
+    })
 });
-
 
 
 
@@ -44,3 +43,6 @@ document.querySelector("body").addEventListener("click", (e) => {
     }
   }
 });
+
+
+import "./js/search/searchMain.js"

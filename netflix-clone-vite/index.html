@@ -36,7 +36,20 @@
 
       <nav id="right">
         <ul>
-          <li><img class="icon" src="/돋보기.png" alt="search" /></li>
+          <li>
+            <div id="search-wrapper">
+              <img class="icon" src="/돋보기.png" alt="search" />
+              <div id="input-wrapper">
+                <input
+                  id="search-input"
+                  placeholder="검색어를 입력하세요"
+                  autocomplete="off"
+                />
+                <div id="recent-layer" class="layer" hidden></div>
+                <div id="result-layer" class="layer" hidden></div>
+              </div>
+            </div>
+          </li>
           <li>
             <img id="alram" class="icon" src="/알람.png" alt="alram" />
             <div id="notice">
@@ -100,10 +113,7 @@
           <ul class="indicator"></ul>
           <nav class="slider prev">〈</nav>
           <div class="scrollbox-wrapper">
-            <ul class="scrollbox">
-
-
-            </ul>
+            <ul class="scrollbox"></ul>
           </div>
           <nav class="slider next">〉</nav>
         </section>
@@ -114,10 +124,7 @@
           <ul class="indicator"></ul>
           <nav class="slider prev">〈</nav>
           <div class="scrollbox-wrapper">
-            <ul class="scrollbox">
-
-
-            </ul>
+            <ul class="scrollbox"></ul>
           </div>
           <nav class="slider next">〉</nav>
         </section>
@@ -127,9 +134,7 @@
           <ul class="indicator"></ul>
           <nav class="slider prev">〈</nav>
           <div class="scrollbox-wrapper">
-            <ul class="scrollbox">
-
-            </ul>
+            <ul class="scrollbox"></ul>
           </div>
           <nav class="slider next">〉</nav>
         </section>

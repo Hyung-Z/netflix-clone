@@ -375,3 +375,40 @@ button:hover {
     text-align: center;
     line-height: 25px;
 }
+
+#search-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#search-input {
+    height: 1.3rem;
+}
+
+#result-layer {
+    background-color: #8a8a8aae;
+}
+#input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#result-layer ul{
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+#result-layer li {
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+    gap: 8px;
+}
+
+.result img {
+    width: 70px;
+    aspect-ratio: 16/9;
+}

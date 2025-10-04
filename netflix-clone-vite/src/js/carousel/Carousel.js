@@ -8,54 +8,94 @@ export default class Carousel {
     this.indicatorEl = root.querySelector(".indicator");
 
     this.loop = loop;
-    this.pageIndex = 0; // 실제 보이는 페이지 인덱스 (0 ~ pages-1)
-    this.virtualPageIndex = 0; // 애니메이션 계산을 위한 가상 인덱스 (음수 또는 pages 이상 가능)
-    this.currentX = 0;
     this.transitionMs = 500;
+
+    // --- 이벤트 핸들러를 constructor에서 한 번만 바인딩 ---
+    this.handlePrev = this.prev.bind(this);
+    this.handleNext = this.next.bind(this);
+    this.handleTransitionEnd = this._handleTransitionEnd.bind(this);
+    this.handleResize = this._handleResize.bind(this);
 
     this.init();
   }
 
   init() {
-    this.items = [...this.scrollbox.querySelectorAll("li:not(.clone)")];
+    // 리스너를 먼저 깔끔하게 제거
+    this.unbind();
+
+    this.teardownClones();
+    this.items = [...this.scrollbox.querySelectorAll("li")];
     if (!this.items.length) return;
     
-    this.teardownClones();
     this.measure();
     if (this.loop) {
-        this.setupClones();
+      this.setupClones();
     }
     this.buildIndicators();
 
+    // 초기 위치 설정
     this.pageIndex = 0;
     this.virtualPageIndex = 0;
     this.jumpToPage(this.pageIndex);
-
-    // 이전 이벤트 리스너 제거 (중복 방지)
-    if (this.boundResize) {
-        window.removeEventListener("resize", this.boundResize);
-    }
-    if (this.boundTransitionEnd) {
-        this.scrollbox.removeEventListener("transitionend", this.boundTransitionEnd);
-    }
+    
+    // 준비된 핸들러를 다시 연결
     this.bind();
+  }
+  
+  // --- 리스너를 제거하는 메서드 ---
+  unbind() {
+    this.prevBtn?.removeEventListener("click", this.handlePrev);
+    this.nextBtn?.removeEventListener("click", this.handleNext);
+    this.scrollbox.removeEventListener("transitionend", this.handleTransitionEnd);
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  // --- 리스너를 연결하는 메서드 ---
+  bind() {
+    this.prevBtn?.addEventListener("click", this.handlePrev);
+    this.nextBtn?.addEventListener("click", this.handleNext);
+    this.scrollbox.addEventListener("transitionend", this.handleTransitionEnd);
+    window.addEventListener("resize", this.handleResize, { passive: true });
+  }
+
+  _handleResize() {
+    const oldPageIndex = this.pageIndex;
+    this.init(); // init은 unbind -> bind 사이클을 담당
+    const newPageIndex = Math.min(oldPageIndex, this.pages - 1);
+    this.jumpToPage(newPageIndex);
+    this.virtualPageIndex = newPageIndex;
+  }
+
+  _handleTransitionEnd() {
+    if (!this.loop) return;
+    
+    if (this.virtualPageIndex >= this.pages) {
+      this.virtualPageIndex = 0;
+      this.jumpToPage(this.virtualPageIndex);
+    }
+    
+    if (this.virtualPageIndex < 0) {
+      this.virtualPageIndex = this.pages - 1;
+      this.jumpToPage(this.virtualPageIndex);
+    }
   }
 
   measure() {
     const styles = getComputedStyle(this.scrollbox);
     const gap = parseFloat(styles.columnGap || "0");
-    const cardWidth = this.items[0].getBoundingClientRect().width;
+    const cardWidth = this.items.length > 0 ? this.items[0].getBoundingClientRect().width : 0;
     const wrapperWidth = this.wrapper.clientWidth;
 
     this.perPage = Math.max(1, Math.floor((wrapperWidth + gap) / (cardWidth + gap)));
     this.pages = Math.max(1, Math.ceil(this.items.length / this.perPage));
     this.pageDistance = this.perPage * (cardWidth + gap);
-
+    
     this.cardWidth = cardWidth;
     this.gap = gap;
   }
 
   setupClones() {
+    if (!this.items.length) return;
     const n = this.perPage;
     const headItems = this.items.slice(-n).map((node) => node.cloneNode(true));
     const tailItems = this.items.slice(0, n).map((node) => node.cloneNode(true));
@@ -80,17 +120,17 @@ export default class Carousel {
     this.indicatorEl.innerHTML = "";
     for (let i = 0; i < this.pages; i++) {
       const li = document.createElement("li");
-      const button = document.createElement("div");
-      button.textContent = "-";
-      li.appendChild(button);
+      const indicator = document.createElement("div");
+      indicator.textContent = "-";
+      li.appendChild(indicator);
       this.indicatorEl.appendChild(li);
 
-      button.addEventListener("click", () => {
+      indicator.addEventListener("click", () => {
         this.virtualPageIndex = i;
         this.animateToPage(this.virtualPageIndex);
       });
     }
-    this.setIndicator(0);
+    this.setIndicator(this.pageIndex);
   }
 
   setIndicator(index) {
@@ -104,40 +144,16 @@ export default class Carousel {
     dots[activeIndex]?.classList.add("now-here");
   }
 
-  bind() {
-    this.prevBtn?.addEventListener("click", () => this.prev());
-    this.nextBtn?.addEventListener("click", () => this.next());
-
-    this.boundTransitionEnd = () => {
-      if (!this.loop) return;
-      
-      if (this.virtualPageIndex >= this.pages) {
-        this.virtualPageIndex = 0;
-        this.jumpToPage(this.virtualPageIndex);
-      }
-      
-      if (this.virtualPageIndex < 0) {
-        this.virtualPageIndex = this.pages - 1;
-        this.jumpToPage(this.virtualPageIndex);
-      }
-    };
-    this.scrollbox.addEventListener("transitionend", this.boundTransitionEnd);
-
-    this.boundResize = () => this.init();
-    window.addEventListener("resize", this.boundResize, { passive: true });
-  }
-
-  // 애니메이션 없이 즉시 이동
   jumpToPage(realPageIndex) {
     const x = -this.headCloneCount * (this.cardWidth + this.gap) - realPageIndex * this.pageDistance;
     this.withoutTransition(() => {
       this.applyX(x);
     });
     this.pageIndex = realPageIndex;
+    this.virtualPageIndex = realPageIndex; // virtualPageIndex도 동기화
     this.setIndicator(this.pageIndex);
   }
 
-  // 애니메이션과 함께 이동
   animateToPage(virtualPageIndex) {
     const x = -this.headCloneCount * (this.cardWidth + this.gap) - virtualPageIndex * this.pageDistance;
     this.withTransition(() => {
@@ -168,13 +184,13 @@ export default class Carousel {
   }
 
   prev() {
-    if (!this.pages) return;
+    if (!this.pages || (this.pageIndex <= 0 && !this.loop)) return;
     this.virtualPageIndex--;
     this.animateToPage(this.virtualPageIndex);
   }
 
   next() {
-    if (!this.pages) return;
+    if (!this.pages || (this.pageIndex >= this.pages - 1 && !this.loop)) return;
     this.virtualPageIndex++;
     this.animateToPage(this.virtualPageIndex);
   }
