@@ -4,6 +4,8 @@ export function buildIndicators({ categoryEl, itemCount, perPage }) {
 
   indicator.innerHTML = "";
   const pages = Math.max(1, Math.ceil(itemCount / perPage));
+  
+  console.log(itemCount, perPage, pages)
 
   for (let i = 0; i < pages; i++) {
     const li = document.createElement("li");
